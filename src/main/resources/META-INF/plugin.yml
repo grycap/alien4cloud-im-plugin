@@ -1,0 +1,15 @@
+id: alien4cloud-im-plugin
+name: Alien 4 Cloud - IM Plugin
+version: ${project.version}
+description: Alien 4 Cloud Plugin for the Infrastructure Manager
+configuration_class: PluginConfiguration
+#ui_entry_point: scripts/plugin.js
+component_descriptors:
+  - bean_name: indigodc-im-plugin-factory
+    name: IndigoDC Orchestrator
+    description: lien 4 Cloud Plugin for the Infrastructure Manager
+  - bean_name: iaas-modifier
+    name: Iaas Modifier.
+    description: >
+     Override computes with the manager default properties.
+     Insert this modifier to post-node-match phase.
