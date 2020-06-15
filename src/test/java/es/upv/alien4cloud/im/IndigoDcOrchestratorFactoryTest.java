@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IndigoDcOrchestratorFactoryTest {
 	
-	protected static class IndigoDcOrchestratorFactoryBadPath  extends IndigoDcOrchestratorFactory{
+	protected static class IndigoDcOrchestratorFactoryBadPath  extends IndigoDcIMPluginFactory{
 		
 		@Override
 		  protected String getCloudConfDefaultFile() {
@@ -24,20 +24,20 @@ public class IndigoDcOrchestratorFactoryTest {
 	}
 	
 	@Test
-	public void badPathToDefaultConf() throws NoSuchFieldException, SecurityException, Exception {		
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactoryBadPath();
+	public void badPathToDefaultConf() throws NoSuchFieldException, SecurityException, Exception {
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
 		CloudConfiguration cc = fact.getDefaultConfiguration();
-		Assertions.assertEquals(cc.getImportIndigoCustomTypes(), IndigoDcOrchestratorFactory.NO_DEFAULT_CONF_FILE);
-		Assertions.assertEquals(cc.getOrchestratorEndpoint(), IndigoDcOrchestratorFactory.NO_DEFAULT_CONF_FILE);
-		Assertions.assertEquals(cc.getOrchestratorEndpointCert(), IndigoDcOrchestratorFactory.NO_DEFAULT_CONF_FILE);
-		Assertions.assertEquals(cc.getOrchestratorEndpointCert(), IndigoDcOrchestratorFactory.NO_DEFAULT_CONF_FILE);
-		Assertions.assertEquals(cc.getOrchestratorPollInterval(), IndigoDcOrchestratorFactory.NO_DEFAULT_CONF_FILE_POLL);
+		Assertions.assertEquals(cc.getImportIndigoCustomTypes(), IndigoDcIMPluginFactory.NO_DEFAULT_CONF_FILE);
+		Assertions.assertEquals(cc.getOrchestratorEndpoint(), IndigoDcIMPluginFactory.NO_DEFAULT_CONF_FILE);
+		Assertions.assertEquals(cc.getOrchestratorEndpointCert(), IndigoDcIMPluginFactory.NO_DEFAULT_CONF_FILE);
+		Assertions.assertEquals(cc.getOrchestratorEndpointCert(), IndigoDcIMPluginFactory.NO_DEFAULT_CONF_FILE);
+		Assertions.assertEquals(cc.getOrchestratorPollInterval(), IndigoDcIMPluginFactory.NO_DEFAULT_CONF_FILE_POLL);
 	}
 	
 	@Test
 	public void destroy_call_orchestrator_destroy() {
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactory();
-		IndigoDcOrchestrator orc = Mockito.mock(IndigoDcOrchestrator.class);
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
+		IndigoDcIMPlugin orc = Mockito.mock(IndigoDcIMPlugin.class);
 		final List<Integer> destExec = new ArrayList<>();
 		Mockito.doAnswer((i) -> { destExec.add(0);return null;}).when(orc).destroy();
 		fact.destroy(orc);
@@ -46,38 +46,38 @@ public class IndigoDcOrchestratorFactoryTest {
 	
 	@Test
 	public void getDeploymentPropertyDefinitions_empty() {
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactory();
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
 		Assertions.assertTrue(fact.getDeploymentPropertyDefinitions().isEmpty());
 	}
 	
 	@Test
 	public void getLocationSupport_unique() {
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactory();
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
 		Assertions.assertEquals(fact.getLocationSupport().getTypes().length, 1);
 		Assertions.assertFalse(fact.getLocationSupport().isMultipleLocations());		
 	}
 	
 	@Test
 	public void getLocationSupport_is_LocationConfigurator_LOCATION_TYPE() {
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactory();
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
 		Assertions.assertEquals(fact.getLocationSupport().getTypes()[0], LocationConfigurator.LOCATION_TYPE);
 		
 	}
 	
 	@Test
 	public void getType_is_IndigoDcOrchestrator_TYPE() {
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactory();
-		Assertions.assertEquals(fact.getType(), IndigoDcOrchestrator.TYPE);
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
+		Assertions.assertEquals(fact.getType(), IndigoDcIMPlugin.TYPE);
 		
 	}
 	
 	@Test
 	public void newInstance_creates_new_IndigoDcOrchestrator_with_default_opts() {
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactory();
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
 		BeanFactory bf = Mockito.mock(BeanFactory.class);
-		Mockito.when(bf.getBean(IndigoDcOrchestrator.class)).thenReturn(new IndigoDcOrchestrator());
+		Mockito.when(bf.getBean(IndigoDcIMPlugin.class)).thenReturn(new IndigoDcIMPlugin());
 		TestUtil.setPrivateField(fact, "beanFactory", bf);
-		Assertions.assertEquals(fact.newInstance().getClass(), IndigoDcOrchestrator.class);
+		Assertions.assertEquals(fact.newInstance().getClass(), IndigoDcIMPlugin.class);
 	}
 
 }

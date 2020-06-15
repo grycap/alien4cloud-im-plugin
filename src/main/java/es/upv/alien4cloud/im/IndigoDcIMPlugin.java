@@ -169,7 +169,7 @@ public class IndigoDcIMPlugin implements IOrchestratorPlugin<CloudConfiguration>
       //statusManager.addStatus(deploymentContext, orchestratorUuidDeployment, DeploymentStatus.DEPLOYMENT_IN_PROGRESS);
       callback.onSuccess(null);
       event.setDeploymentStatus(DeploymentStatus.DEPLOYMENT_IN_PROGRESS);
-    } catch (NoSuchFieldException | IOException | OrchestratorIamException er) {
+    } catch (NoSuchFieldException | IOException | OrchestratorIamException | AuthorizationFileNotFoundException er) {
       event.setDeploymentStatus(DeploymentStatus.FAILURE);
       callback.onFailure(er);
       log.error("Error deployment", er);
@@ -227,7 +227,7 @@ public class IndigoDcIMPlugin implements IOrchestratorPlugin<CloudConfiguration>
           //));
       }
        event.setDeploymentStatus(DeploymentStatus.UNDEPLOYMENT_IN_PROGRESS);
-    } catch (IOException er) {
+    } catch (AuthorizationFileNotFoundException | IOException er) {
       event.setDeploymentStatus(DeploymentStatus.FAILURE);
       log.error("Error undeployment", er);
       callback.onFailure(er);
@@ -312,7 +312,7 @@ public class IndigoDcIMPlugin implements IOrchestratorPlugin<CloudConfiguration>
             topologyInfo.put(groupId, instancesInfo);
             callback.onSuccess(topologyInfo);
           }
-      } catch (StatusNotFoundException | NoSuchFieldException | IOException e) {
+      } catch (AuthorizationFileNotFoundException | StatusNotFoundException | NoSuchFieldException | IOException e) {
         e.printStackTrace();
         callback.onFailure(e);
         } catch (OrchestratorIamException er) {
@@ -516,7 +516,7 @@ public class IndigoDcIMPlugin implements IOrchestratorPlugin<CloudConfiguration>
             callback.onSuccess(Util.indigoDcStatusToDeploymentStatus(statusTopologyDeployment));
           } else
             updateStatusesDeploymentsUser(deploymentContext, callback, di);
-	    } catch (NoSuchFieldException | IOException | StatusNotFoundException e) {
+	    } catch (AuthorizationFileNotFoundException | NoSuchFieldException | IOException | StatusNotFoundException e) {
           event.setDeploymentStatus(DeploymentStatus.FAILURE);
 	      e.printStackTrace();
 	      callback.onFailure(e);
@@ -585,7 +585,7 @@ public class IndigoDcIMPlugin implements IOrchestratorPlugin<CloudConfiguration>
 //        }
 
       }
-    } catch (NoSuchFieldException | IOException e) {
+    } catch (AuthorizationFileNotFoundException | NoSuchFieldException | IOException e) {
       e.printStackTrace();
     } catch (OrchestratorIamException e) {
       e.printStackTrace();

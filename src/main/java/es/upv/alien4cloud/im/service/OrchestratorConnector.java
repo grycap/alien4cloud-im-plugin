@@ -202,7 +202,7 @@ public class OrchestratorConnector {
             isUrlSecured(cloudConfiguration.getImEndpoint()), sslContext, HttpMethod.POST);
   }
 
-  public OrchestratorResponse callGetTemplate(CloudConfiguration cloudConfiguration,          ,
+  public OrchestratorResponse callGetTemplate(CloudConfiguration cloudConfiguration,
                                               String deploymentUUID)
           throws IOException, NoSuchFieldException, OrchestratorIamException, AuthorizationFileNotFoundException {
     log.info("call Deploy");
@@ -213,8 +213,7 @@ public class OrchestratorConnector {
     URL requestUrl = new URL(sbuf.toString());
 
     SSLContext sslContext = getSslContext(cloudConfiguration);
-    LOGGER.info("Post Data: " + yamlTopology);
-    return restCall(requestUrl, yamlTopology, generateHeaders(cloudConfiguration),
+    return restCall(requestUrl, null, generateHeaders(cloudConfiguration),
             isUrlSecured(cloudConfiguration.getImEndpoint()), sslContext, HttpMethod.POST);
   }
 

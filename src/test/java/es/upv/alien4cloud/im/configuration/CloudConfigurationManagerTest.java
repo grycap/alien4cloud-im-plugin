@@ -3,14 +3,14 @@ package es.upv.alien4cloud.im.configuration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
-import es.upv.indigodc.alien4cloud.im.plugin.IndigoDcOrchestratorFactory;
+import es.upv.alien4cloud.im.IndigoDcIMPluginFactory;
 import org.junit.jupiter.api.Test;
 
 public class CloudConfigurationManagerTest {
 	
 	@Test
 	public void multipleOrchestratorsSameConf() {
-		IndigoDcOrchestratorFactory fact = new IndigoDcOrchestratorFactory();
+		IndigoDcIMPluginFactory fact = new IndigoDcIMPluginFactory();
 		CloudConfiguration cc = fact.getDefaultConfiguration();
 		CloudConfigurationManager ccm = new CloudConfigurationManager();
 		ccm.addCloudConfiguration("1", cc);
